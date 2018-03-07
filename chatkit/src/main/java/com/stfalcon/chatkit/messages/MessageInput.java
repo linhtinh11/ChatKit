@@ -249,7 +249,6 @@ public class MessageInput extends RelativeLayout
          * Fires when user presses any character
          *
          * @param input input entered by user
-         * @return null
          */
         void onTextChanged(CharSequence input);
     }
