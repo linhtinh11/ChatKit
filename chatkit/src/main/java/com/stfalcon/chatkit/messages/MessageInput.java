@@ -26,8 +26,8 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,7 +42,7 @@ import java.lang.reflect.Field;
 public class MessageInput extends RelativeLayout
         implements View.OnClickListener, TextWatcher {
 
-    protected EditText messageInput;
+    protected MultiAutoCompleteTextView messageInput;
     protected ImageButton messageSendButton;
     protected ImageButton attachmentButton;
     protected Space sendButtonSpace, attachmentButtonSpace;
@@ -85,11 +85,11 @@ public class MessageInput extends RelativeLayout
     }
 
     /**
-     * Returns EditText for messages input
+     * Returns MultiAutoCompleteTextView for messages input
      *
-     * @return EditText
+     * @return MultiAutoCompleteTextView
      */
-    public EditText getInputEditText() {
+    public MultiAutoCompleteTextView getInputEditText() {
         return messageInput;
     }
 
@@ -123,6 +123,7 @@ public class MessageInput extends RelativeLayout
     public void onTextChanged(CharSequence s, int start, int count, int after) {
         input = s;
         messageSendButton.setEnabled(input.length() > 0);
+        if (inputListener != null) inputListener.onTextChanged(input);
     }
 
     /**
@@ -194,7 +195,7 @@ public class MessageInput extends RelativeLayout
     private void init(Context context) {
         inflate(context, R.layout.view_message_input, this);
 
-        messageInput = (EditText) findViewById(R.id.messageInput);
+        messageInput = (MultiAutoCompleteTextView) findViewById(R.id.messageInput);
         messageSendButton = (ImageButton) findViewById(R.id.messageSendButton);
         attachmentButton = (ImageButton) findViewById(R.id.attachmentButton);
         sendButtonSpace = (Space) findViewById(R.id.sendButtonSpace);
@@ -243,6 +244,14 @@ public class MessageInput extends RelativeLayout
          * @return if input text is valid, you must return {@code true} and input will be cleared, otherwise return false.
          */
         boolean onSubmit(CharSequence input);
+
+        /**
+         * Fires when user presses any character
+         *
+         * @param input input entered by user
+         * @return null
+         */
+        void onTextChanged(CharSequence input);
     }
 
     /**
