@@ -46,6 +46,11 @@ public class CustomLayoutMessagesActivity extends DemoMessagesActivity
     }
 
     @Override
+    public void onTextChanged(CharSequence input) {
+
+    }
+
+    @Override
     public void onAddAttachments() {
         messagesAdapter.addToStart(MessagesFixtures.getImageMessage(), true);
     }
